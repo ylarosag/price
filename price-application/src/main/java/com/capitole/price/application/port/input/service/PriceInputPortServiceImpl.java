@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
 import com.capitole.price.application.port.output.repository.*;
@@ -32,7 +31,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Validated
 @Service
 public class PriceInputPortServiceImpl implements PriceInputPortService {
 

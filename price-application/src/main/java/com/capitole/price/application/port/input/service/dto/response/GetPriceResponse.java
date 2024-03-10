@@ -32,6 +32,6 @@ public class GetPriceResponse {
 	private Integer brandId;
 	private Integer priceList;
 	private LocalDateTime startDate;
-	private LocalDateTime startEnd;
+	private LocalDateTime endDate;
 	private BigDecimal priceSale;
 }

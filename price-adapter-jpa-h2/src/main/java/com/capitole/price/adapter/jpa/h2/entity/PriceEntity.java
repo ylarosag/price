@@ -20,7 +20,10 @@ package com.capitole.price.adapter.jpa.h2.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,20 +37,32 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customers")
 @Entity
+@Table(name = "PRICE")
 public class PriceEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long priceId;
+	@Column(name = "BRAND_ID", nullable = false, unique = false)
 	private Integer brandId;
+	@Column(name = "START_DATE", nullable = false, unique = false)
 	private LocalDateTime startDate;
-	private LocalDateTime startEnd;
+	@Column(name = "END_DATE", nullable = false, unique = false)
+	private LocalDateTime endDate;
+	@Column(name = "PRICE_LIST", nullable = false, unique = false)
 	private Integer priceList;
+	@Column(name = "PRODUCT_ID", nullable = false, unique = false)
 	private Long productId;
+	@Column(name = "PRIORITY", nullable = false, unique = false)
 	private Integer priority;
+	@Column(name = "PRICE_SALE", nullable = false, unique = false)
 	private BigDecimal priceSale;
-	private String curr;
+	@Column(name = "CURRENCY_CODE", nullable = false, unique = false)
+	private String currencyCode;
+	@Column(name = "CREATE_DATE", nullable = false, unique = false)
 	private LocalDateTime createDate;
+	@Column(name = "UPDATE_DATE", nullable = false, unique = false)
 	private LocalDateTime updateEnd;
+	@Column(name = "USERNAME", nullable = false, unique = false)
 	private String username;
 }

@@ -18,18 +18,13 @@
 package com.capitole.price.adapter.rest.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@Validated
 @AllArgsConstructor
 @ConfigurationProperties(prefix = "price.adapter.rest", ignoreUnknownFields = true)
 public class PriceAdapterRestProperties {
-
-//	@Value("${price.adapter.rest:}")
-//	private List<Long> locs;
-
+	//TODO YLR ADD PROPERTIES
 }

@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capitole.price.adapter.jpa.h2.entity.PriceEntity;
 import com.capitole.price.common.Constant;
 
-@Repository
 @Transactional(readOnly = true, timeout = Constant.QUERY_TIMEOUT)
+@Repository
 public interface PriceReadOnlyJpaRepository extends JpaRepository<PriceEntity, Long> {
 
 	Optional<PriceEntity> findFirstByBrandIdAndProductIdAndApplicationDate(Integer brandId, Long productId,

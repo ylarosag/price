@@ -1,7 +1,10 @@
 # PRICE
 
+## Notes
+Currency ISO 4217
+https://www.iso.org/iso-4217-currency-codes.html#:~:text=The%20first%20two%20letters%20of,and%20the%20D%20for%20dollar.
+
 ## Getting started
-Cada dominio debe tener una biblioteca data-{dominio} y una commons-{dominio}
 
 ## Pasos:
 

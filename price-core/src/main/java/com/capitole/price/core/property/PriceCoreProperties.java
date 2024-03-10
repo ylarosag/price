@@ -15,33 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.capitole.price.adapter.jpa.h2.property;
+package com.capitole.price.core.property;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@Validated
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "source.template", ignoreUnknownFields = true)
-public class SourceDomainProperties {
-
-	@Value("${source.price.locs:}")
-	private List<Long> locs;
-	
-	@Value("${source.template.integration.tables:ITEM_LOC}")
-	private List<String> integrationTables;
-	
-	@Value("${source.template.log.general.enable:1}")
-	private Integer logGeneralEnable;	
-
-	@Value("${source.template.log.while.enable:1}")
-	private Integer logWhileEnable;
-
+@ConfigurationProperties(prefix = "price.core", ignoreUnknownFields = true)
+public class PriceCoreProperties {
+	// TODO YLR ADD PROPERTIES
 }

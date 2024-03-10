@@ -30,7 +30,7 @@ import lombok.Getter;
 public class Price {
 	private Integer brandId;
 	private LocalDateTime startDate;
-	private LocalDateTime startEnd;
+	private LocalDateTime endDate;
 	private Integer priceList;
 	private Long productId;
 	private Integer priority;

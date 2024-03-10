@@ -21,11 +21,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.capitole.price.common.Constant;
 
 @SpringBootApplication
-@ComponentScan({ Constant.NAMESPACES })
+@ComponentScan(basePackages = { Constant.NAMESPACES })
+//@EnableJpaRepositories(Constant.NAMESPACES)
 @ConfigurationPropertiesScan({ Constant.NAMESPACES })
 public class PriceAdapterRestApplication {
 	public static void main(String[] args) {
