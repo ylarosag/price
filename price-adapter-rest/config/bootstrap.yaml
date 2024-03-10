@@ -1,0 +1,12 @@
+# Not add properties
+# Spring properties
+spring:
+  profiles:
+    active: dev
+# Spring Cloud Config Server Repository
+  cloud:
+    config:
+      uri: http://localhost:8080/server-cloud/cloud-config
+      username: user.config
+      password: tVGh44Ctd2W9pJGhtg5s
+      fail-fast: true

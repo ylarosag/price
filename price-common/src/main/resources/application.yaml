@@ -1,0 +1,87 @@
+# Add only the properties that are not changed
+info:
+  component:  source-template
+server:
+  servlet:
+    context-path: /${info.component}
+spring:
+  application:
+    name: ${info.component}
+  batch:
+    isolation:
+      level: ISOLATION_READ_COMMITTED
+  cloud:
+    config:
+      name: ${info.component}
+  kafka:
+    properties:
+      schema:
+        registry:
+          url: https://schema-registry.aws.confluent.cloud
+    producer:
+      client-id: ${info.component}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      topic: private.uy.gdn.tmplate.update.v1
+    consumer:
+      group-id: ${info.component}
+      client-id: ${info.component}
+      topic: 
+      core:
+        cdc:
+          topic: private.uy.gdn.cdc.update.v1
+  main:
+    banner-mode: log
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+  boot:
+    admin:
+      client:
+        url: https://manh-sit1r3.tata.com.uy/server-admin
+        username: admin
+        password: admin
+        instance:
+          service-base-url: https://omnicanalidad-test.tata.com.uy
+  datasource:
+    minimumIdle: 5
+    maximumPoolSize: 20
+    idleTimeout: 30000
+    maxLifetime: 2000000
+    connectionTimeout: 300000
+  task:
+    executor:
+      pool-size: 70
+      max-pool-size: 75
+      queue-capacity: 80
+logging:
+  config: config/logback.xml
+springdoc:
+  swagger-ui:
+    path: /tata-swagger-ui.html
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: '*'
+        exclude: env,beans,configprops
+    web:
+      exposure:
+        include: '*'
+        exclude: env,beans,configprops
+keycloak:
+  resource: ${info.component}
+  realm: tata
+  ssl-required: external
+  use-resource-role-mappings: true
+  bearer-only: true
+sso:
+  client-id: ${info.component}
+  username: ${info.component}-component
+  grant-type: password
+pagination:
+  order: ASC  
+tata:
+  core:
+    consumer:
+      enable: true

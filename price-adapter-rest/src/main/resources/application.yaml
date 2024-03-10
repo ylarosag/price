@@ -1,0 +1,55 @@
+info:
+  component:  price-adapter-rest
+server:
+  servlet:
+    context-path: /${info.component}
+spring:
+  application:
+    name: ${info.component}
+  batch:
+    isolation:
+      level: ISOLATION_READ_COMMITTED
+  cloud:
+    config:
+      name: ${info.component}
+  main:
+    banner-mode: log
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081/server-admin
+        username: admin
+        password: admin
+        instance:
+          service-base-url: http://localhost:8082/server-admin
+  datasource:
+    minimumIdle: 5
+    maximumPoolSize: 20
+    idleTimeout: 30000
+    maxLifetime: 2000000
+    connectionTimeout: 300000
+  task:
+    executor:
+      pool-size: 70
+      max-pool-size: 75
+      queue-capacity: 80
+logging:
+  config: config/logback.xml
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: '*'
+        exclude: env,beans,configprops
+    web:
+      exposure:
+        include: '*'
+        exclude: env,beans,configprops
+pagination:
+  order: ASC
