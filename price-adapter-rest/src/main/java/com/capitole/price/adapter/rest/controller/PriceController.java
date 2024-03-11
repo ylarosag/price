@@ -27,11 +27,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capitole.price.adapter.rest.config.DefaultApiResponses;
 import com.capitole.price.application.port.input.service.PriceInputPortService;
 import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
 import com.capitole.price.common.dto.ResponseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
@@ -42,9 +44,21 @@ public class PriceController {
 
 	private final PriceInputPortService pricePortService;
 
-	@Operation(security = @SecurityRequirement(name = "bearerAuth"), summary = "Find price")
-	@GetMapping(path = "/event/{brandId}/{productId}")
-	public ResponseEntity<ResponseDto<GetPriceResponse>> eventOrder(@PathVariable("brandId") Integer brandId, @PathVariable("productId") Long productId,
+	@DefaultApiResponses
+	@Operation(
+			security = @SecurityRequirement(name = "bearerAuth"),
+			summary = "Find a price", 
+			description = "Find a price by brand id, product id and application date", 
+			operationId = "getPrice", 
+			tags = { "Price: Read Only" }
+	)
+	@GetMapping(path = "/{brandId}/{productId}")
+	public ResponseEntity<ResponseDto<GetPriceResponse>> getPrice(
+			@Parameter(name = "brandId", description = "Identifier of the brand to be searched, example: 1 to search for ZARA products") 
+			@PathVariable("brandId") Integer brandId,
+			@Parameter(name = "productId", description = "Identifier of the product to be searched, example: 35455") 
+			@PathVariable("productId") Long productId,
+			@Parameter(name = "applicationDate", description = "Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00") 
 			@RequestParam(name = "applicationDate") LocalDateTime applicationDate) {
 		return ResponseEntity.ok(pricePortService.getPrice(brandId, productId, applicationDate));
 	}

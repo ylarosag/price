@@ -51,13 +51,13 @@ public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 	@Value("${info.component}")
 	private String infoComponent;
 
-	@Value("${tata.core.web.aspect.enable:true}")
+	@Value("${web.aspect.enable:true}")
 	private boolean aspectEnable;
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler({ PriceException.class })
 	@ResponseBody
-	public ResponseDto<Object> tataExceptionHandler(PriceException exception) {
+	public ResponseDto<Object> customExceptionHandler(PriceException exception) {
 		if (aspectEnable) {
 			log.error(LOG_FORMAT, "exceptionHandler", exception);
 		}
@@ -65,9 +65,12 @@ public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler({ ConstraintViolationException.class,
-			org.springframework.web.server.ServerWebInputException.class, IllegalArgumentException.class,
-			HttpClientErrorException.BadRequest.class })
+	@ExceptionHandler({ 
+		ConstraintViolationException.class,
+		org.springframework.web.server.ServerWebInputException.class, 
+		IllegalArgumentException.class,
+		HttpClientErrorException.BadRequest.class 
+	})
 	@ResponseBody
 	public ResponseDto<Object> badRequestHandler(Exception exception) {
 		if (aspectEnable) {

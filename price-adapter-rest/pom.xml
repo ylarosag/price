@@ -33,6 +33,7 @@
 		<sonar.projectKey>price-adapter-rest</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<springdoc.version>2.3.0</springdoc.version>
+		<flyway-maven-plugin.version>10.9.1</flyway-maven-plugin.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -41,6 +42,12 @@
 			<url>https://repo1.maven.org/maven2/</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>redgate</id>
+			<url>https://download.red-gate.com/maven/release</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -118,6 +125,10 @@
 			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
@@ -184,6 +195,11 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway-maven-plugin.version}</version>
 			</plugin>
 		</plugins>
 	</build>

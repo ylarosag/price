@@ -41,6 +41,7 @@ import lombok.Setter;
 @Table(name = "PRICE")
 public class PriceEntity {
 	@Id
+	@Column(name = "PRICE_ID", nullable = false, unique = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long priceId;
 	@Column(name = "BRAND_ID", nullable = false, unique = false)
@@ -57,12 +58,12 @@ public class PriceEntity {
 	private Integer priority;
 	@Column(name = "PRICE_SALE", nullable = false, unique = false)
 	private BigDecimal priceSale;
-	@Column(name = "CURRENCY_CODE", nullable = false, unique = false)
+	@Column(name = "CURRENCY_CODE", nullable = true, unique = false)
 	private String currencyCode;
-	@Column(name = "CREATE_DATE", nullable = false, unique = false)
+	@Column(name = "CREATE_DATE", nullable = true, unique = false)
 	private LocalDateTime createDate;
-	@Column(name = "UPDATE_DATE", nullable = false, unique = false)
+	@Column(name = "UPDATE_DATE", nullable = true, unique = false)
 	private LocalDateTime updateEnd;
-	@Column(name = "USERNAME", nullable = false, unique = false)
+	@Column(name = "USERNAME", nullable = true, unique = false)
 	private String username;
 }

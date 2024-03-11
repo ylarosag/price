@@ -11,24 +11,3 @@ spring:
       username: user.config
       password: tVGh44Ctd2W9pJGhtg5s
       fail-fast: true
-# Configurations to be moved to the cloud config server, I put them here to simplify the testing
-  datasource:
-# h2     
-# file
-#   url: jdbc:h2:file:/data/demo
-# memory
-    url: jdbc:h2:mem:mydb;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect    
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: update
-  h2:
-    console.enabled: true
-    console:
-      path: /h2-console
-      settings.trace: false
-      settings.web-allow-others: false

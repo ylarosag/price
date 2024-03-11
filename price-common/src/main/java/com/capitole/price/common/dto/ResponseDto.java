@@ -24,17 +24,24 @@ import java.util.Set;
 
 import com.capitole.price.common.enums.MessageType;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @AllArgsConstructor
+@Schema(description = "Wrapper with the request response")
 public class ResponseDto<T> implements Serializable {
 
 	private static final long serialVersionUID = -8113098782890579894L;
 
 	@SuppressWarnings("java:S1948")
+	@Schema(description = "Object of response")
 	private T data;
+
+	@Schema(description = "List of messages about request processing")
 	private Set<MessageDto> messages;
 
 	public ResponseDto() {
@@ -49,7 +56,8 @@ public class ResponseDto<T> implements Serializable {
 		this.messages.addAll(Arrays.asList(message));
 	}
 
-	public boolean getError() {
+	@Schema(description = "Returns true if there is at least one error in the request processing.")
+	public boolean isError() {
 		return this.messages.stream().anyMatch(m -> m.getType().equals(MessageType.ERROR));
 	}
 

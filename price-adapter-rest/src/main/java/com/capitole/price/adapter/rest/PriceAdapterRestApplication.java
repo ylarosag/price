@@ -19,6 +19,7 @@ package com.capitole.price.adapter.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,7 +28,8 @@ import com.capitole.price.common.Constant;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { Constant.NAMESPACES })
-//@EnableJpaRepositories(Constant.NAMESPACES)
+@EntityScan(Constant.NAMESPACES)
+@EnableJpaRepositories(Constant.NAMESPACES)
 @ConfigurationPropertiesScan({ Constant.NAMESPACES })
 public class PriceAdapterRestApplication {
 	public static void main(String[] args) {

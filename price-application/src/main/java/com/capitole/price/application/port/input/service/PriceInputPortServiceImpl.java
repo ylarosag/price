@@ -18,13 +18,18 @@
 package com.capitole.price.application.port.input.service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import org.springframework.stereotype.Service;
 
+import com.capitole.price.application.mapper.MapStructConverter;
 import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
 import com.capitole.price.application.port.output.repository.*;
+import com.capitole.price.common.Constant;
+import com.capitole.price.common.dto.MessageDto;
 import com.capitole.price.common.dto.ResponseDto;
+import com.capitole.price.common.enums.MessageType;
 import com.capitole.price.core.entity.Price;
 
 import lombok.NonNull;
@@ -39,10 +44,17 @@ public class PriceInputPortServiceImpl implements PriceInputPortService {
 	@Override
 	public ResponseDto<GetPriceResponse> getPrice(@NonNull Integer brandId, @NonNull Long productId,
 			@NonNull LocalDateTime applicationDate) {
-		Optional<Price> price = priceReadOnlyRepository.findFirstPrice(brandId, productId, applicationDate);
-		
-		// TODO Auto-generated method stub
-		return null;
+		Price price = priceReadOnlyRepository.findFirstPrice(brandId, productId, applicationDate)
+				.orElseThrow(() -> new IllegalArgumentException(Constant.NOT_FOUND));
+		return ResponseDto.<GetPriceResponse>builder().data(MapStructConverter.MAPPER.convert(price))
+				.messages(new HashSet<>(Arrays.asList(
+					MessageDto.builder()
+					.code("1202")
+					.origin("price-component")
+					.type(MessageType.SUCCESS)
+					.build())
+				))
+				.build();
 	}
 
 }

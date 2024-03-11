@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2024 
+ * Copyright (C) 2024
  * @author https://www.linkedin.com/in/ylarosag/
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.capitole.price.adapter.jpa.h2.repository;
+package com.capitole.price.application.mapper;
 
-import java.time.LocalDateTime;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
+import com.capitole.price.core.entity.Price;
 
-import com.capitole.price.adapter.jpa.h2.entity.PriceEntity;
-import com.capitole.price.common.Constant;
+@Mapper
+public interface MapStructConverter extends Converter {
+	MapStructConverter MAPPER = Mappers.getMapper(MapStructConverter.class);
 
-@Transactional(readOnly = true, timeout = Constant.QUERY_TIMEOUT)
-@Repository("PriceReadOnlyJpaRepository")
-public interface PriceReadOnlyJpaRepository extends JpaRepository<PriceEntity, Long> {
-
-	Page<PriceEntity> findFirstByBrandIdAndProductIdAndStartDate(Integer brandId, Long productId,
-			LocalDateTime startDate, Pageable pageable);
+	@Override
+	GetPriceResponse convert(Price price);
 }

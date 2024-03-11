@@ -12,7 +12,7 @@ spring:
 # file
 #   url: jdbc:h2:file:/data/demo
 # memory
-    url: jdbc:h2:mem:mydb;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:price_readonly;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: password
     driverClassName: org.h2.Driver
@@ -20,7 +20,8 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect    
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update
+# validate | update | create | create-drop
+      ddl-auto: create
   h2:
     console.enabled: true
     console:
@@ -40,7 +41,21 @@ spring:
 ```
 
 # URL H2
-<http://localhost:8080/h2-console>
+<http://localhost:8080/price-adapter-rest/h2-console>
+
+```
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+```
+
+# MIGRATION
+```
+mvn clean flyway:migrate -Dflyway.configFiles=flyway.conf
+```
+
+# DATA TYPES
+<https://www.h2database.com/html/datatypes.html>
 
 ## Authors and acknowledgment
 Yudiel La Rosa

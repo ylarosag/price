@@ -21,17 +21,25 @@ import java.io.Serializable;
 
 import com.capitole.price.common.enums.MessageType;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Message of business", example = "2020-06-15T11:00:00", $comment = "ISO 8601")
 public class MessageDto implements Serializable {
 	private static final long serialVersionUID = -6485782108810420915L;
-	private String origen;
+	@Schema(description = "System from which the message is launched")
+	private String origin;
+	@Schema(description = "Unique code that identifies the message", example = "1202")
 	private String code;
+	@Schema(description = "Descriptive text of the message")
 	private String message;
+	@Schema(description = "Message of business", example = "SUCCESS", $comment = "SUCCESS | INFO | WARNING | ERROR")
 	private MessageType type;
 }

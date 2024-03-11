@@ -32,6 +32,7 @@
 		<avro.version>1.9.1</avro.version>
 		<sonar.projectKey>price-common</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+		<springdoc.version>2.3.0</springdoc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -42,6 +43,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<!-- SpringDoc -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>

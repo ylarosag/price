@@ -30,8 +30,9 @@
 		<spring-cloud.version>2022.0.2</spring-cloud.version>
 		<model.mapper.version>3.1.1</model.mapper.version>
 		<avro.version>1.9.1</avro.version>
-        <sonar.projectKey>price-application</sonar.projectKey>
-        <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+		<sonar.projectKey>price-application</sonar.projectKey>
+		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -73,7 +74,12 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-		</dependency>	
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+		</dependency>
 		<!-- DATA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
