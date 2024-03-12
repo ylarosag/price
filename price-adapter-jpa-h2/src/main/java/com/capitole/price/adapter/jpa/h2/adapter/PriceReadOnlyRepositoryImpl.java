@@ -25,7 +25,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import com.capitole.price.adapter.jpa.h2.entity.PriceEntity;
-import com.capitole.price.adapter.jpa.h2.mapper.MapStructConverter;
+import com.capitole.price.adapter.jpa.h2.mapper.DaoMapper;
 import com.capitole.price.adapter.jpa.h2.repository.PriceReadOnlyJpaRepository;
 import com.capitole.price.application.port.output.repository.PriceReadOnlyRepository;
 import com.capitole.price.common.Constant;
@@ -39,18 +39,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Component("PriceReadOnlyRepository")
 public class PriceReadOnlyRepositoryImpl implements PriceReadOnlyRepository {
-
+	private final DaoMapper daoMapper;
     private final PriceReadOnlyJpaRepository priceReadOnlyJpaRepository;
 
 	@Override
 	public Optional<Price> findFirstPrice(Integer brandId, Long productId, LocalDateTime applicationDate) {
 		Pageable pageable = PageRequest.of(0, 1, Sort.by(Direction.DESC, "priority"));
-		Page<PriceEntity> priceEntities = priceReadOnlyJpaRepository.findFirstByBrandIdAndProductIdAndStartDate(brandId, productId, applicationDate, pageable);
+		Page<PriceEntity> priceEntities = priceReadOnlyJpaRepository.findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(brandId, productId, applicationDate, applicationDate, pageable);
 		
 		if (priceEntities.isEmpty()) {
 			throw new IllegalArgumentException(Constant.NOT_FOUND);
 		}
 		PriceEntity priceEntity = priceEntities.get().findFirst().orElseThrow(() -> new IllegalArgumentException(Constant.NOT_FOUND));
-		return Optional.of(MapStructConverter.MAPPER.convert(priceEntity));
+		return Optional.of(daoMapper.priceEntityToPrice(priceEntity));
 	}
 }

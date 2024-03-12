@@ -32,6 +32,6 @@ import com.capitole.price.common.Constant;
 @Repository("PriceReadOnlyJpaRepository")
 public interface PriceReadOnlyJpaRepository extends JpaRepository<PriceEntity, Long> {
 
-	Page<PriceEntity> findFirstByBrandIdAndProductIdAndStartDate(Integer brandId, Long productId,
-			LocalDateTime startDate, Pageable pageable);
+	Page<PriceEntity> findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(Integer brandId, Long productId,
+			LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 }

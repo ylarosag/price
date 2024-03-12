@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -30,17 +31,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Builder
 @AllArgsConstructor
 @Schema(description = "Price obtained as a result of the request")
-public class GetPriceResponse {
+public class GetPriceResponse implements Serializable {
+
+	private static final long serialVersionUID = 563176542900807850L;
+	
 	@Schema(description = "Product ID", example = "35455")
 	private Long productId;
+	
 	@Schema(description = "Brand ID", example = "1")
 	private Integer brandId;
+	
 	@Schema(description = "Price of List", example = "2")
 	private Integer priceList;
+	
 	@Schema(description = "Price of List", example = "2020-06-15T11:00:00", $comment = "ISO 8601")
 	private LocalDateTime startDate;
+	
 	@Schema(description = "Price of List", example = "2020-06-15T11:00:00", $comment = "ISO 8601")
 	private LocalDateTime endDate;
+	
 	@Schema(description = "Price of List", example = "30.50")
 	private BigDecimal priceSale;
 }

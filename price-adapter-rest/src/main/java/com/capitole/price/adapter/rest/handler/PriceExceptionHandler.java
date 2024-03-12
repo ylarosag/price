@@ -17,7 +17,9 @@
  ******************************************************************************/
 package com.capitole.price.adapter.rest.handler;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -41,27 +43,21 @@ import com.capitole.price.core.exception.PriceException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@Slf4j
 public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private static final String LOG_FORMAT = "CATCH_EXCEPTION_IN_HANDLER={} | {}";
+	private static final String ORIGIN = "price-component";
 
-	@Value("${info.component}")
-	private String infoComponent;
-
-	@Value("${web.aspect.enable:true}")
-	private boolean aspectEnable;
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler({ PriceException.class })
 	@ResponseBody
 	public ResponseDto<Object> customExceptionHandler(PriceException exception) {
-		if (aspectEnable) {
-			log.error(LOG_FORMAT, "exceptionHandler", exception);
-		}
-		return createResponseDtoFromException(exception);
+		log.error(LOG_FORMAT, "exceptionHandler", exception);
+		return createResponseDtoFromException(exception, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -73,20 +69,59 @@ public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 	})
 	@ResponseBody
 	public ResponseDto<Object> badRequestHandler(Exception exception) {
-		if (aspectEnable) {
-			log.error(LOG_FORMAT, "badRequestHandler", exception);
-		}
-		return createResponseDtoFromException(exception);
+		log.error(LOG_FORMAT, "badRequestHandler", exception);
+		return ResponseDto.<Object>builder()
+				.messages(new HashSet<>(Arrays.asList(MessageDto.builder()
+				.code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+				.origin(ORIGIN)
+				.type(MessageType.ERROR).build())))
+				.build();
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler({ Exception.class })
 	@ResponseBody
 	public ResponseDto<Object> exceptionHandler(Exception exception) {
-		if (aspectEnable) {
-			log.error(LOG_FORMAT, "exceptionHandler", exception);
+		log.error(LOG_FORMAT, "badRequestHandler", exception);
+		return ResponseDto.<Object>builder()
+				.messages(new HashSet<>(Arrays.asList(MessageDto.builder()
+				.code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR))
+				.origin(ORIGIN)
+				.type(MessageType.ERROR).build())))
+				.build();
+	}
+
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException exception) {
+		log.error(LOG_FORMAT, "handleMethodArgumentNotValid", exception.getMessage());
+		ResponseDto<Object> response = ResponseDto.<Object>builder().build();
+		
+		for (final FieldError error : exception.getBindingResult().getFieldErrors()) {
+			response.addMessage(createMessageDtoByField(error.getField(), error.getDefaultMessage()));
 		}
-		return createResponseDtoFromException(exception);
+		for (final ObjectError error : exception.getBindingResult().getGlobalErrors()) {
+			response.addMessage(createMessageDtoByField(error.getObjectName(), error.getDefaultMessage()));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	}
+
+	private MessageDto createMessageDtoByField(String element, String message) {
+		message = message.contains("#hideField#") ? message.replace("#hideField#", "") : element + ": " + message;
+		return MessageDto.builder()
+				.code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+				.origin(ORIGIN)
+				.message(message)
+				.type(MessageType.ERROR)
+				.build();
+	}
+
+	public ResponseDto<Object> createResponseDtoFromException(Exception exception, HttpStatus httpStatus) {
+		return ResponseDto.<Object>builder()
+				.messages(new HashSet<>(Arrays.asList(MessageDto.builder()
+						.code(String.valueOf(httpStatus))
+						.origin(ORIGIN)
+						.message(exception.getMessage())
+						.type(MessageType.ERROR).build())))
+				.build();
 	}
 
 	@ResponseStatus(HttpStatus.CONFLICT)
@@ -111,42 +146,6 @@ public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ HttpClientErrorException.NotFound.class })
 	public void notFoundRequestHandler(Exception exception) {
 		log.error(LOG_FORMAT, "notFoundRequestHandler", exception);
-	}
-
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException exception) {
-		if (aspectEnable) {
-			log.error(LOG_FORMAT, "handleMethodArgumentNotValid", exception.getMessage());
-		}
-		ResponseDto<Object> response = new ResponseDto<>();
-		response.setData(null);
-		for (final FieldError error : exception.getBindingResult().getFieldErrors()) {
-			response.addMessage(createMessageDtoByField(error.getField(), error.getDefaultMessage()));
-		}
-		for (final ObjectError error : exception.getBindingResult().getGlobalErrors()) {
-			response.addMessage(createMessageDtoByField(error.getObjectName(), error.getDefaultMessage()));
-		}
-		log.error("handle", exception);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-	}
-
-	private MessageDto createMessageDtoByField(String element, String message) {
-		message = message.contains("#hideField#") ? message.replace("#hideField#", "") : element + ": " + message;
-		return new MessageDto(infoComponent, String.valueOf(HttpStatus.BAD_REQUEST.value()), message,
-				MessageType.ERROR);
-	}
-
-	public ResponseDto<Object> createResponseDtoFromException(Exception exception) {
-		ResponseDto<Object> response = new ResponseDto<>();
-		response.setData(null);
-
-		if (exception instanceof ConstraintViolationException) {
-			response.addMessage(new MessageDto(infoComponent, String.valueOf(HttpStatus.BAD_REQUEST.value()),
-					exception.getMessage(), MessageType.ERROR));
-		} else if (exception instanceof Exception) {
-			response.addMessage(new MessageDto(infoComponent, String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-					"Unknown exception", MessageType.ERROR));
-		}
-		return response;
 	}
 
 }

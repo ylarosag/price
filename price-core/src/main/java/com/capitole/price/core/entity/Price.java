@@ -17,6 +17,7 @@
  ******************************************************************************/
 package com.capitole.price.core.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -27,7 +28,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class Price {
+public class Price implements Serializable {
+	private static final long serialVersionUID = 2537560644714091761L;
 	private Integer brandId;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
@@ -35,7 +37,7 @@ public class Price {
 	private Long productId;
 	private Integer priority;
 	private BigDecimal priceSale;
-	private String curr;
+	private String currencyCode;
 	private LocalDateTime createDate;
 	private LocalDateTime updateEnd;
 	private String username;

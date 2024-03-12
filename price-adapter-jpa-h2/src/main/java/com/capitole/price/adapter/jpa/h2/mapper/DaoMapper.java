@@ -15,18 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.capitole.price.application.mapper;
+package com.capitole.price.adapter.jpa.h2.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingConstants.ComponentModel;
 
-import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
+import com.capitole.price.adapter.jpa.h2.entity.PriceEntity;
 import com.capitole.price.core.entity.Price;
 
-@Mapper
-public interface MapStructConverter extends Converter {
-	MapStructConverter MAPPER = Mappers.getMapper(MapStructConverter.class);
+@Mapper(componentModel = ComponentModel.SPRING)
+public interface DaoMapper {
 
-	@Override
-	GetPriceResponse convert(Price price);
+	Price priceEntityToPrice(PriceEntity priceEntity);
+
 }

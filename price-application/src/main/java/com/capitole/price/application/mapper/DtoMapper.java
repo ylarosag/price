@@ -15,12 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.capitole.price.adapter.jpa.h2.mapper;
+package com.capitole.price.application.mapper;
 
-import com.capitole.price.adapter.jpa.h2.entity.PriceEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants.ComponentModel;
+
+import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
 import com.capitole.price.core.entity.Price;
 
-public interface Converter {
+@Mapper(componentModel = ComponentModel.SPRING)
+public interface DtoMapper {
 
-	Price convert(PriceEntity priceEntity);
+	GetPriceResponse priceToGetPriceResponse(Price price);
+
+	Price getPriceResponseToPrice(GetPriceResponse getPriceResponse);
 }

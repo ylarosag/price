@@ -23,9 +23,9 @@ import java.util.HashSet;
 
 import org.springframework.stereotype.Service;
 
-import com.capitole.price.application.mapper.MapStructConverter;
+import com.capitole.price.application.mapper.DtoMapper;
 import com.capitole.price.application.port.input.service.dto.response.GetPriceResponse;
-import com.capitole.price.application.port.output.repository.*;
+import com.capitole.price.application.port.output.repository.PriceReadOnlyRepository;
 import com.capitole.price.common.Constant;
 import com.capitole.price.common.dto.MessageDto;
 import com.capitole.price.common.dto.ResponseDto;
@@ -37,8 +37,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class PriceInputPortServiceImpl implements PriceInputPortService {
-
+public class PriceInputPortServiceImpl implements PriceInputPortService { 
+	private final DtoMapper daoMapper;
 	private final PriceReadOnlyRepository priceReadOnlyRepository;
 
 	@Override
@@ -46,7 +46,7 @@ public class PriceInputPortServiceImpl implements PriceInputPortService {
 			@NonNull LocalDateTime applicationDate) {
 		Price price = priceReadOnlyRepository.findFirstPrice(brandId, productId, applicationDate)
 				.orElseThrow(() -> new IllegalArgumentException(Constant.NOT_FOUND));
-		return ResponseDto.<GetPriceResponse>builder().data(MapStructConverter.MAPPER.convert(price))
+		return ResponseDto.<GetPriceResponse>builder().data(daoMapper.priceToGetPriceResponse(price))
 				.messages(new HashSet<>(Arrays.asList(
 					MessageDto.builder()
 					.code("1202")
