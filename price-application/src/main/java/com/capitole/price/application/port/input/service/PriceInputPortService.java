@@ -24,6 +24,29 @@ import com.capitole.price.common.dto.ResponseDto;
 
 import lombok.NonNull;
 
+/**
+ * <h1>Price Input Port</h1> This interface defines the operations to be
+ * implemented in the application layer and to be exposed or used in the
+ * adapters.
+ *
+ * @version 1.0.0
+ */
 public interface PriceInputPortService {
-	ResponseDto<GetPriceResponse> getPrice(@NonNull Integer brandId, @NonNull Long productId, @NonNull LocalDateTime applicationDate);
+
+	/**
+	 * This method allows obtaining the price data corresponding to the filters
+	 * applied.
+	 * 
+	 * @param brandId         This parameter is required and refers to the
+	 *                        identifier of the brand.
+	 * @param productId       This parameter is required and refers to the
+	 *                        identifier of the product.
+	 * @param applicationDate This parameter allows you to filter by an application
+	 *                        date to obtain the corresponding price.
+	 * @return GetPriceResponse
+	 * 
+	 * @throws PriceException
+	 */
+	ResponseDto<GetPriceResponse> getPrice(@NonNull Integer brandId, @NonNull Long productId,
+			@NonNull LocalDateTime applicationDate);
 }

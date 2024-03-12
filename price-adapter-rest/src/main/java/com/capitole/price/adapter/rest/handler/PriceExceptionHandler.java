@@ -74,6 +74,7 @@ public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 				.messages(new HashSet<>(Arrays.asList(MessageDto.builder()
 				.code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
 				.origin(ORIGIN)
+				.message(exception.getMessage())
 				.type(MessageType.ERROR).build())))
 				.build();
 	}
@@ -87,6 +88,7 @@ public class PriceExceptionHandler extends ResponseEntityExceptionHandler {
 				.messages(new HashSet<>(Arrays.asList(MessageDto.builder()
 				.code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR))
 				.origin(ORIGIN)
+				.message(exception.getMessage())
 				.type(MessageType.ERROR).build())))
 				.build();
 	}

@@ -25,8 +25,17 @@ import com.capitole.price.core.entity.Price;
 
 @Mapper(componentModel = ComponentModel.SPRING)
 public interface DtoMapper {
-
+	
+	/**
+     * Busca el precio para un producto y cadena en una fecha determinada, 
+     * devolviendo el que tenga mayor prioridad en caso de haber más de uno.
+     *
+     * @param productId Identificador del producto
+     * @param brandId Identificador de la cadena
+     * @param date Fecha para la que se quiere buscar el precio
+     * @return PrioritizedPriceResponseDTO con el precio encontrado
+     */
 	GetPriceResponse priceToGetPriceResponse(Price price);
 
-	Price getPriceResponseToPrice(GetPriceResponse getPriceResponse);
+	Price priceResponseToPrice(GetPriceResponse priceResponse);
 }

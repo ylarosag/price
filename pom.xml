@@ -14,6 +14,8 @@
 	<properties>
 		<mockito.version>5.2.0</mockito.version>
 		<flyway-maven-plugin.version>10.9.1</flyway-maven-plugin.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+		<lombok.version>1.18.26</lombok.version>
 	</properties>
 	<modules>
 		<module>price-common</module>
@@ -61,6 +63,16 @@
 				<groupId>com.capitole</groupId>
 				<artifactId>price-adapter-rest</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct-processor</artifactId>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct-jdk8</artifactId>
+				<version>${org.mapstruct.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

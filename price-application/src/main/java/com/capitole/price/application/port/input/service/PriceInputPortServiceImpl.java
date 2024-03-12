@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.capitole.price.application.mapper.DtoMapper;
@@ -34,11 +35,14 @@ import com.capitole.price.core.entity.Price;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PriceInputPortServiceImpl implements PriceInputPortService { 
 	private final DtoMapper daoMapper;
+	private final ModelMapper modelMapper = new ModelMapper();
 	private final PriceReadOnlyRepository priceReadOnlyRepository;
 
 	@Override
@@ -46,7 +50,9 @@ public class PriceInputPortServiceImpl implements PriceInputPortService {
 			@NonNull LocalDateTime applicationDate) {
 		Price price = priceReadOnlyRepository.findFirstPrice(brandId, productId, applicationDate)
 				.orElseThrow(() -> new IllegalArgumentException(Constant.NOT_FOUND));
-		return ResponseDto.<GetPriceResponse>builder().data(daoMapper.priceToGetPriceResponse(price))
+		log.info("Price {}", price);
+		log.info("GetPriceResponse {}", daoMapper.priceToGetPriceResponse(price));
+		return ResponseDto.<GetPriceResponse>builder().data(modelMapper.map(price, GetPriceResponse.class))
 				.messages(new HashSet<>(Arrays.asList(
 					MessageDto.builder()
 					.code("1202")

@@ -1,8 +1,26 @@
 # PRICE
 
 ## Notes
-Currency ISO 4217
-https://www.iso.org/iso-4217-currency-codes.html#:~:text=The%20first%20two%20letters%20of,and%20the%20D%20for%20dollar.
+
+> [!NOTE]
+> 
+
+> [!TIP]
+> 
+
+> [!IMPORTANT]
+> 
+
+> [!WARNING]
+> 
+
+> [!CAUTION]
+> 
+
+Currency Code[^1].
+
+![alt text]()
+
 
 ## Getting started
 
@@ -16,3 +34,6 @@ GPL v3
 
 ## Project status
 TEST
+
+### References
+[^1]: ISO 4217 <https://www.iso.org/iso-4217-currency-codes.html>

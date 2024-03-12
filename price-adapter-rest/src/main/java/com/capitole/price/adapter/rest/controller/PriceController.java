@@ -38,6 +38,16 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
+/**
+* <h1>REST API - Price</h1>
+* REST API class that implements read-only operations on the price domain.
+* <p>
+* <b>Note:</b> 
+* This class exposes the different operations that can be performed on the price domain.
+* It is recommended in the future to add security through spring security and an SSO.
+*
+* @version 1.0.0
+*/
 @Validated
 @RestController
 @RequiredArgsConstructor

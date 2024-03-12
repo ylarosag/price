@@ -2390,6 +2390,481 @@
 											"body": ""
 										}
 									]
+								},
+								{
+									"name": "Find a price Test 6",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"HTTP Status Code 200 OK\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"    var obj = JSON.parse(responseBody);\r",
+													"\r",
+													"    pm.test(\"Response time is less than 1000s\", function () {\r",
+													"        pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+													"    });\r",
+													"    pm.test(\"Result OK: priceSale == 38.95\", function () {\r",
+													"        pm.expect(obj.data.priceSale).to.eql(38.95);\r",
+													"    });\r",
+													"    pm.test(\"Result OK: priceList == 4\", function () {\r",
+													"        pm.expect(obj.data.priceList).to.eql(4);\r",
+													"    });\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=2020-06-16T21:00:00",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"price",
+												":brandId",
+												":productId"
+											],
+											"query": [
+												{
+													"key": "applicationDate",
+													"value": "2020-06-16T21:00:00",
+													"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+												}
+											],
+											"variable": [
+												{
+													"key": "brandId",
+													"value": "1",
+													"description": "(Required) Identifier of the brand to be searched, example: 1 to search for ZARA products"
+												},
+												{
+													"key": "productId",
+													"value": "6666",
+													"description": "(Required) Identifier of the product to be searched, example: 35455"
+												}
+											]
+										},
+										"description": "Find a price by brand id, product id and application date\n\nTest 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)"
+									},
+									"response": [
+										{
+											"name": "OK. The request succeeded.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"data\": {\n    \"productId\": \"<long>\",\n    \"brandId\": \"<integer>\",\n    \"priceList\": \"<integer>\",\n    \"startDate\": \"<dateTime>\",\n    \"endDate\": \"<dateTime>\",\n    \"priceSale\": \"<number>\"\n  },\n  \"messages\": [\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"SUCCESS\"\n    },\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"INFO\"\n    }\n  ],\n  \"error\": \"<boolean>\"\n}"
+										},
+										{
+											"name": "Bad Request. The server cannot or will not process the request due to something that is perceived to be a client error.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"data\": {},\n  \"messages\": [\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"WARNING\"\n    },\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"ERROR\"\n    }\n  ],\n  \"error\": \"<boolean>\"\n}"
+										},
+										{
+											"name": "Unauthorized. The client must authenticate itself to get the requested response.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"data\": {\n    \"productId\": \"<long>\",\n    \"brandId\": \"<integer>\",\n    \"priceList\": \"<integer>\",\n    \"startDate\": \"<dateTime>\",\n    \"endDate\": \"<dateTime>\",\n    \"priceSale\": \"<number>\"\n  },\n  \"messages\": [\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"SUCCESS\"\n    },\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"INFO\"\n    }\n  ],\n  \"error\": \"<boolean>\"\n}"
+										},
+										{
+											"name": "Forbidden. The client does not have access rights to the content.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Forbidden",
+											"code": 403,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found. The server can not find the requested resource.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Conflict. This response is sent when a request conflicts with the current state of the server.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Conflict",
+											"code": 409,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Server Error. The server has encountered a situation it does not know how to handle.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"data\": {},\n  \"messages\": [\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"WARNING\"\n    },\n    {\n      \"origin\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"type\": \"ERROR\"\n    }\n  ],\n  \"error\": \"<boolean>\"\n}"
+										},
+										{
+											"name": "Bad Gateway. This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/price/:brandId/:productId?applicationDate=<dateTime>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"price",
+														":brandId",
+														":productId"
+													],
+													"query": [
+														{
+															"key": "applicationDate",
+															"value": "<dateTime>",
+															"description": "(Required) Date of application of a price, ISO 8601, example: 2020-06-15T11:00:00"
+														}
+													],
+													"variable": [
+														{
+															"key": "brandId"
+														},
+														{
+															"key": "productId"
+														}
+													]
+												}
+											},
+											"status": "Bad Gateway",
+											"code": 502,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
 								}
 							]
 						}

@@ -17,29 +17,31 @@
  ******************************************************************************/
 package com.capitole.price.adapter.jpa.h2.adapter;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.capitole.price.adapter.jpa.h2.entity.PriceEntity;
-import com.capitole.price.adapter.jpa.h2.mapper.DaoMapper;
 import com.capitole.price.adapter.jpa.h2.repository.PriceReadOnlyJpaRepository;
 import com.capitole.price.application.port.output.repository.PriceReadOnlyRepository;
 import com.capitole.price.common.Constant;
 import com.capitole.price.core.entity.Price;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
+@Slf4j
 @RequiredArgsConstructor
-@Component("PriceReadOnlyRepository")
+@Service
 public class PriceReadOnlyRepositoryImpl implements PriceReadOnlyRepository {
-	private final DaoMapper daoMapper;
+	private final ModelMapper modelMapper = new ModelMapper();
     private final PriceReadOnlyJpaRepository priceReadOnlyJpaRepository;
 
 	@Override
@@ -51,6 +53,9 @@ public class PriceReadOnlyRepositoryImpl implements PriceReadOnlyRepository {
 			throw new IllegalArgumentException(Constant.NOT_FOUND);
 		}
 		PriceEntity priceEntity = priceEntities.get().findFirst().orElseThrow(() -> new IllegalArgumentException(Constant.NOT_FOUND));
-		return Optional.of(daoMapper.priceEntityToPrice(priceEntity));
+		log.info("PriceEntity {}", priceEntity);
+		log.info("Price mapper {}", modelMapper.map(priceEntity, Price.class));
+		
+		return Optional.of(modelMapper.map(priceEntity, Price.class));
 	}
 }

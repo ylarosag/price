@@ -24,12 +24,19 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
+@Setter
+@ToString
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Price implements Serializable {
 	private static final long serialVersionUID = 2537560644714091761L;
+	private Long priceId;
 	private Integer brandId;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;

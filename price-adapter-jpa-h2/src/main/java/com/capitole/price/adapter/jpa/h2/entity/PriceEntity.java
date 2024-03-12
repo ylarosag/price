@@ -20,6 +20,8 @@ package com.capitole.price.adapter.jpa.h2.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.capitole.price.core.entity.Price;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,9 +33,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

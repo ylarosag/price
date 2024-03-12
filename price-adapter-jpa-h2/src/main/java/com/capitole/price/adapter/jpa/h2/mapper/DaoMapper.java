@@ -28,4 +28,6 @@ public interface DaoMapper {
 
 	Price priceEntityToPrice(PriceEntity priceEntity);
 
+	PriceEntity priceToPriceEntity(PriceEntity price);
+
 }
